@@ -10,7 +10,7 @@ fn main() {
     say(out, width, &mut writer).unwrap();
 }
 */
-
+pub extern crate block_cipher_trait;
 use std::io;
 use rand::prelude::*;
 
@@ -28,7 +28,7 @@ static  mask_r:[u64;6]=[0x5555555555555555,
 	0x0000ffff0000ffff,
 	0x00000000ffffffff];
 
-fn real_ortho(&mut data:[u64;64]){
+fn real_ortho(data: &mut[u64;64]){
 	for i in 0..6{
 		let n:u64=(1 as u64)<<i;
 		let mut j:u64=0;
@@ -45,6 +45,22 @@ fn real_ortho(&mut data:[u64;64]){
 		}
 
 	} 
+}
+fn orthogonalize( data:&mut[u64;64], out: &mut[u64;64] ) {
+  for i in 0..64{
+  	 out[i] = data[i];
+  }
+  real_ortho(out);
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+	let mut data :[u64; 64] = [0x0000000000000001 ;64];
+	let mut out :[u64; 64] = [0x0000000000000000 ;64];
+    #[test]
+    fn test_ortho() {
+        assert_eq!(orthogonalize(data,out),[0x0000000000000001 as u64 ;64]);
+    }
 }
 
 fn main() {
