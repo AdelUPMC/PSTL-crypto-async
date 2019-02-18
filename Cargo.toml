@@ -1,4 +1,5 @@
 [package]
+<<<<<<< HEAD
 name = "pstl_crypto_async"
 version = "0.1.0"
 authors = ["Adel"]
@@ -8,3 +9,25 @@ edition = "2018"
 ferris-says = "0.1"
 rand = "0.6"
 des = "0.3.0"
+=======
+name = "crypto_async"
+version = "0.1.0"
+authors = ["Pierre-Evariste Dagand <pedagand@lip6.fr>",
+           "Youssra Benkour <Youssrabenkour@gmail.com>",
+           "Adel El Amraou <adel.el_amraoui@etu.upmc.fr>", 
+           "Yohanan Harroch <harrochy@yahoo.fr>",
+           "Guo Ning <ai535463858@gmail.com>", 
+           "Djadji Traore <djadji.traore75@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+[dev-dependencies]
+criterion = "0.2"
+
+[[bench]]
+name = "benchmark_wrapper"
+harness = false
+
+[build-dependencies]
+cc = "1.0"
+>>>>>>> upstream/master
