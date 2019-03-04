@@ -1,4 +1,4 @@
-use std::thread;
+se std::thread;
 use std::sync::mpsc;
 use std::sync::Arc;
 use std::sync::Mutex;
@@ -6,6 +6,18 @@ use std::sync::Mutex;
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: mpsc::Sender<Job>,
+}
+
+#[derive(Copy, Clone)]
+pub struct Cell {
+    pub plain: u64,
+    pub key: u64,
+}
+
+impl Cell {
+    pub fn to_string(self) -> String {
+        return format!("plain {} , key {}", self.plain, self.key);
+    }
 }
 
 trait FnBox {
@@ -62,7 +74,7 @@ impl Worker {
             loop {
                 let job = receiver.lock().unwrap().recv().unwrap();
 
-                println!("Worker {} got a job; executing.", id);
+//                println!("Worker {} got a job; executing.", id);
 
                 job.call_box();
             }
