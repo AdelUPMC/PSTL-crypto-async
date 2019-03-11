@@ -1,20 +1,23 @@
 extern crate rand;
 extern crate time;
-//extern crate crypto_async;
 use std::io::prelude::*;
 use std::net::TcpStream;
 use std::thread;
+use std::env;
 use rand::prelude::*;
+
 
 
 use time::PreciseTime;
 
 
 fn main() {
+	let args: Vec<String> = env::args().collect();
+	let nbrequest: usize = args[1].parse().unwrap();
 	let start = PreciseTime::now();
     let mut vec_thread = Vec::new();
-    //Send 100 requests at the same time
-    for _i in 0..64 {
+    
+    for _i in 0..nbrequest {
         let handle = thread::spawn(move || {
             let mut stream = TcpStream::connect("127.0.0.1:7878").unwrap();
 
@@ -27,7 +30,6 @@ fn main() {
             //read
             let mut buffer = [0; 512];
             stream.read(&mut buffer).unwrap();
-			//crypto_async::wrapper_des::des(plain, key, &mut cipher);
             println!("Received : {}", String::from_utf8_lossy(&buffer));
         });
         vec_thread.push(handle);
